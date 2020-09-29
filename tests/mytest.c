@@ -1,7 +1,7 @@
 #include "mytest.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <conio.h>
+#include <locale.h>
 
 /**
     Structure for test
@@ -24,6 +24,7 @@ void initializeTests(int maxTestCount)
 #if defined(_WIN32) || defined(WIN32)
     system("color");    // For some reason, colors do not work in Visual Studio without this
 #endif
+    setlocale(LC_ALL, "Rus");
 }
 
 void registerTest(const char* name, TEST_FUNCTION testFunction)
@@ -60,6 +61,8 @@ void runTests()
         {
             printf("\x1b[31m\"%s\" failed\x1b[37m\n", tests[i].name);
         }
+        fflush(stdout);
+        fflush(stderr);
     }
     printf("Total\t%d tests\nPassed\t%d tests\nFailed\t%d tests\n", testCount, passCount, testCount - passCount);
 }
@@ -69,9 +72,14 @@ void clearTests()
     free(tests);
 }
 
-void _assert(bool value, const char* file, int line)
+bool _assert(bool value, const char* file, int line)
 {
     if (!value)
-        printf("\tAssertion in file %s on line %d failed\n", file, line);
-    lastTestResult = value;
+    {
+        int tmp = errno;
+        printf("\tAssertion failed in file %s on line %d\n", file, line);
+        errno = tmp;
+    }
+    lastTestResult = lastTestResult && value;
+    return value;
 }

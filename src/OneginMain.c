@@ -14,8 +14,12 @@ int main()
     int lineCount = splitText(data, &lines, &lineLengths, &maxLineLength);
     unsigned char** originalLines = (unsigned char**)calloc(lineCount, sizeof(*originalLines));
     memcpy(originalLines, lines, lineCount * sizeof(*lines));
-    sortFromBeginning(data, lineCount, lines, lineLengths, maxLineLength);
-    writeText("output.txt", lines, lineCount);
+    sortLines(data, lineCount, lines, lineLengths, maxLineLength, DIRECTION_FROMBEGIN);
+    writeText("fromBegin.txt", lines, lineCount);
+    memcpy(lines, originalLines, lineCount * sizeof(*originalLines));
+    sortLines(data, lineCount, lines, lineLengths, maxLineLength, DIRECTION_FROMEND);
+    writeText("fromEnd.txt", lines, lineCount);
+    writeRaw("original.txt", data);
     free(data);
     free(lines);
     free(lineLengths);
