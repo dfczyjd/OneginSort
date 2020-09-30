@@ -5,8 +5,9 @@
 #include <math.h>
 #include <errno.h>
 
-const char tempfile[] = "tmpfile.txt";
-
+/**
+    \brief Test for <CODE>toLower</CODE> function
+*/
 void toLowerTest()
 {
     EXPECT_EQUAL(toLower('Ц'), (unsigned char)'ц');
@@ -15,6 +16,9 @@ void toLowerTest()
     EXPECT_EQUAL(toLower('.'), (unsigned char)'.');
 }
 
+/**
+    \brief Test for <CODE>isAlpha</CODE> function
+*/
 void isAlphaTest()
 {
     EXPECT_TRUE(isAlpha('ш'));
@@ -23,6 +27,9 @@ void isAlphaTest()
     EXPECT_FALSE(isAlpha(','));
 }
 
+/**
+    \brief Test for <CODE>swap</CODE> function
+*/
 void swapTest()
 {
     Line* left = (Line*)calloc(1, sizeof(*left));
@@ -36,6 +43,9 @@ void swapTest()
     free(right);
 }
 
+/**
+    \brief Test for case of null-pointers for <CODE>splitText</CODE> function
+*/
 void splitTextNullTest()
 {
     unsigned char* text = NULL;
@@ -52,6 +62,9 @@ void splitTextNullTest()
     EXPECT_EQUAL(maxLineLength, 0);
 }
 
+/**
+    \brief Test for case of empty string as <CODE>text</CODE> for <CODE>splitText</CODE> function
+*/
 void splitTextEmptyTest()
 {
     unsigned char text[] = "";
@@ -68,6 +81,9 @@ void splitTextEmptyTest()
     EXPECT_EQUAL(maxLineLength, 0);
 }
 
+/**
+    \brief Test for case of correct paramenters for <CODE>splitText</CODE> function
+*/
 void splitTextCorrectTest()
 {
     unsigned char text[] =
@@ -94,6 +110,9 @@ void splitTextCorrectTest()
     EXPECT_EQUAL(lineLengths[2], 15);
 }
 
+/**
+    \brief Test for <CODE>getSymbol</CODE> function
+*/
 void getSymbolTest()
 {
     unsigned char* line = "Строка для теста. С @,небуквенными?*символа34ми.\n";
@@ -127,13 +146,19 @@ void getSymbolTest()
     EXPECT_EQUAL(next, (unsigned char)'м');
 }
 
+/**
+    \brief Test for case of null-pointers for <CODE>sortLines</CODE> function
+*/
 void sortLinesNullTest()
 {
-    EXPECT_EQUAL(sortLines(NULL, 1, NULL, NULL, 3, DIRECTION_FROMBEGIN), 1);
+    EXPECT_EQUAL(sortLines(1, NULL, NULL, 3, DIRECTION_FROMBEGIN), 1);
     EXPECT_ERROR(EINVAL);
     errno = 0;
 }
 
+/**
+    \brief Test of sorting from beginning for <CODE>sortLines</CODE> function
+*/
 void sortLinesFromBeginTest()
 {
     unsigned char text[] =
@@ -150,7 +175,7 @@ void sortLinesFromBeginTest()
     lineLengths[1] = 11;
     lineLengths[2] = 15;
 
-    EXPECT_EQUAL(sortLines(text, 3, lines, lineLengths, 16, DIRECTION_FROMBEGIN), 0);
+    EXPECT_EQUAL(sortLines(3, lines, lineLengths, 16, DIRECTION_FROMBEGIN), 0);
     ASSERT_NOT_NULL(lines);
     EXPECT_EQUAL(lines[0], text + 21);
     EXPECT_EQUAL(lines[1], text);
@@ -158,6 +183,9 @@ void sortLinesFromBeginTest()
     EXPECT_EQUAL(lines[3], text + 58);
 }
 
+/**
+    \brief Test of sorting from end for <CODE>sortLines</CODE> function
+*/
 void sortLinesFromEndTest()
 {
     unsigned char text[] =
@@ -174,7 +202,7 @@ void sortLinesFromEndTest()
     lineLengths[1] = 11;
     lineLengths[2] = 15;
 
-    EXPECT_EQUAL(sortLines(text, 3, lines, lineLengths, 16, DIRECTION_FROMEND), 0);
+    EXPECT_EQUAL(sortLines(3, lines, lineLengths, 16, DIRECTION_FROMEND), 0);
     ASSERT_NOT_NULL(lines);
     EXPECT_EQUAL(lines[0], text + 36);
     EXPECT_EQUAL(lines[1], text);

@@ -42,9 +42,9 @@ void swap(Line** first, Line** second)
     *second = tmp;
 }
 
-int sortLines(const unsigned char* text, int lineCount, unsigned char** lines, int* lineLengths, int maxLineLength, int direction)
+int sortLines(int lineCount, unsigned char** lines, int* lineLengths, int maxLineLength, int direction)
 {
-    if (text == NULL || lines == NULL || lineLengths == NULL || lineCount == 0)
+    if (lines == NULL || lineLengths == NULL || lineCount == 0)
     {
         errno = EINVAL;
         return 1;
@@ -107,7 +107,7 @@ unsigned char* readText(const char* filename)
     return buffer;
 }
 
-void writeText(const char* filename, unsigned char** lines, int lineCount)
+void writeLines(const char* filename, unsigned char** lines, int lineCount)
 {
     FILE* file = fopen(filename, "w");
     for (int i = 0; i < lineCount; ++i)
@@ -119,7 +119,7 @@ void writeText(const char* filename, unsigned char** lines, int lineCount)
     fclose(file);
 }
 
-void writeRaw(const char* filename, const unsigned char* text)
+void writeText(const char* filename, const unsigned char* text)
 {
     FILE* file = fopen(filename, "w");
     fputs(text, file);
