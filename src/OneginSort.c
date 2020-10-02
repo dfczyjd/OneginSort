@@ -97,12 +97,23 @@ int sortLines(int lineCount, unsigned char** lines, int* lineLengths, int maxLin
 unsigned char* readText(const char* filename)
 {
     FILE* file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        printf("Failed to open file %s for reading\n", filename);
+        return NULL;
+    }
     fseek(file, 0, SEEK_END);
     int size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
     unsigned char* buffer = (unsigned char*)calloc(size, sizeof(*buffer));
-    fread(buffer, sizeof(*buffer), size, file);
+    if (fread(buffer, sizeof(*buffer), size, file) == 0)
+    {
+        printf("Failed to read from file %s\n", filename);
+        free(buffer);
+        fclose(file);
+        return NULL;
+    }
     fclose(file);
     return buffer;
 }
@@ -110,11 +121,21 @@ unsigned char* readText(const char* filename)
 void writeLines(const char* filename, unsigned char** lines, int lineCount)
 {
     FILE* file = fopen(filename, "w");
+    if (file == NULL)
+    {
+        printf("Failed to open file %s for writing\n", filename);
+        return;
+    }
     for (int i = 0; i < lineCount; ++i)
     {
         size_t length;
         for (length = 0; lines[i][length] != '\n'; ++length);
-        fwrite(lines[i], sizeof(unsigned char), length + 1, file);
+        if (fwrite(lines[i], sizeof(unsigned char), length + 1, file) == 0)
+        {
+            printf("Failed to write to file %s\n", filename);
+            fclose(file);
+            return;
+        }
     }
     fclose(file);
 }
@@ -122,7 +143,17 @@ void writeLines(const char* filename, unsigned char** lines, int lineCount)
 void writeText(const char* filename, const unsigned char* text)
 {
     FILE* file = fopen(filename, "w");
-    fputs(text, file);
+    if (file == NULL)
+    {
+        printf("Failed to open file %s for writing\n", filename);
+        return;
+    }
+    if (fputs(text, file) < 0)
+    {
+        printf("Failed to write to file %s\n", filename);
+        fclose(file);
+        return;
+    }
     fclose(file);
 }
 

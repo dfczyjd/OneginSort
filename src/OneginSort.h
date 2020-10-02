@@ -75,8 +75,10 @@ int splitText(unsigned char* text, unsigned char*** lines, int** lineLengths, in
 
 /**
     \brief Reads text from file
+
+    Reads text from file. If an error occures, returns <CODE>NULL</CODE>. Otherwise returns the text from the file.
     \param filename Name of the file to read
-    \returns Text from the file
+    \returns Text from the file, or <CODE>NULL</CODE>, if error occured.
 */
 unsigned char* readText(const char* filename);
 
