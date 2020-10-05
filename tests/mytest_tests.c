@@ -1,5 +1,6 @@
 #include "mytest.h"
 #include "../src/OneginSort.h"
+#include "../src/OneginSort_private.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -8,7 +9,7 @@
 /**
     \brief Test for <CODE>toLower</CODE> function
 */
-void toLowerTest()
+static void toLowerTest()
 {
     EXPECT_EQUAL(toLower('Ц'), (unsigned char)'ц');
     EXPECT_EQUAL(toLower('ц'), (unsigned char)'ц');
@@ -19,7 +20,7 @@ void toLowerTest()
 /**
     \brief Test for <CODE>isAlpha</CODE> function
 */
-void isAlphaTest()
+static void isAlphaTest()
 {
     EXPECT_TRUE(isAlpha('ш'));
     EXPECT_TRUE(isAlpha('Ш'));
@@ -30,7 +31,7 @@ void isAlphaTest()
 /**
     \brief Test for <CODE>swap</CODE> function
 */
-void swapTest()
+static void swapTest()
 {
     Line* left = (Line*)calloc(1, sizeof(*left));
     Line* right = (Line*)calloc(1, sizeof(*right));
@@ -46,7 +47,7 @@ void swapTest()
 /**
     \brief Test for case of null-pointers for <CODE>splitText</CODE> function
 */
-void splitTextNullTest()
+static void splitTextNullTest()
 {
     unsigned char* text = NULL;
     char** lines = NULL;
@@ -65,7 +66,7 @@ void splitTextNullTest()
 /**
     \brief Test for case of empty string as <CODE>text</CODE> for <CODE>splitText</CODE> function
 */
-void splitTextEmptyTest()
+static void splitTextEmptyTest()
 {
     unsigned char text[] = "";
     char** lines = NULL;
@@ -84,7 +85,7 @@ void splitTextEmptyTest()
 /**
     \brief Test for case of correct paramenters for <CODE>splitText</CODE> function
 */
-void splitTextCorrectTest()
+static void splitTextCorrectTest()
 {
     unsigned char text[] =
 "Строка 1\n\
@@ -113,7 +114,7 @@ void splitTextCorrectTest()
 /**
     \brief Test for <CODE>getSymbol</CODE> function
 */
-void getSymbolTest()
+static void getSymbolTest()
 {
     unsigned char* line = "Строка для теста. С @,небуквенными?*символа34ми.\n";
     int length = 36;
@@ -149,7 +150,7 @@ void getSymbolTest()
 /**
     \brief Test for case of null-pointers for <CODE>sortLines</CODE> function
 */
-void sortLinesNullTest()
+static void sortLinesNullTest()
 {
     EXPECT_EQUAL(sortLines(1, NULL, NULL, 3, DIRECTION_FROMBEGIN), 1);
     EXPECT_ERROR(EINVAL);
@@ -159,7 +160,7 @@ void sortLinesNullTest()
 /**
     \brief Test of sorting from beginning for <CODE>sortLines</CODE> function
 */
-void sortLinesFromBeginTest()
+static void sortLinesFromBeginTest()
 {
     unsigned char text[] =
 "Строка под номером 1\n\
@@ -186,7 +187,7 @@ void sortLinesFromBeginTest()
 /**
     \brief Test of sorting from end for <CODE>sortLines</CODE> function
 */
-void sortLinesFromEndTest()
+static void sortLinesFromEndTest()
 {
     unsigned char text[] =
         "Строка под номером 1\n\

@@ -1,4 +1,5 @@
 #include "OneginSort.h"
+#include "OneginSort_private.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
