@@ -50,7 +50,7 @@ static void swapTest()
 static void splitTextNullTest()
 {
     unsigned char* text = NULL;
-    char** lines = NULL;
+    unsigned char** lines = NULL;
     int* lineLengths = NULL;
     int maxLineLength = 0;
 
@@ -69,7 +69,7 @@ static void splitTextNullTest()
 static void splitTextEmptyTest()
 {
     unsigned char text[] = "";
-    char** lines = NULL;
+    unsigned char** lines = NULL;
     int* lineLengths = NULL;
     int maxLineLength = 0;
 
@@ -91,7 +91,7 @@ static void splitTextCorrectTest()
 "Строка 1\n\
 Строка номер 2\n\
 Третья строка, или №3\n";
-    char** lines = NULL;
+    unsigned char** lines = NULL;
     int* lineLengths = NULL;
     int maxLineLength = 0;
 

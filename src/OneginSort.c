@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <memory.h>
+#include <errno.h>
 
 #define ALPHABET_SIZE 256
 

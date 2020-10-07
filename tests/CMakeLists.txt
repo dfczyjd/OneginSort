@@ -1,4 +1,4 @@
-add_executable(test
+add_executable(testProject
     mytest.c
     mytest.h
     mytest_tests.c
